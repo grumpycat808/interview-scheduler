@@ -1,6 +1,8 @@
 import DayList from "components/DayList"
 import "components/Application.scss";
+import "components/Appointments"
 import React, { useState } from "react";
+import Appointment from "components/Appointments";
 
 const days = [
   {
@@ -19,8 +21,17 @@ const days = [
     spots: 0,
   },
 ];
+
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
+
+  const appointments = props.appointments.map((apt) => {
+    return (
+      <Appointment
+        {...apt}
+        ></Appointment>
+    );
+  })
   return (
     <main className="layout">
       <section className="sidebar">
@@ -44,7 +55,7 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {appointments}
       </section>
     </main>
   );

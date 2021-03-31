@@ -4,48 +4,48 @@ import "components/Appointments"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Appointment from "components/Appointments";
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+import {getAppointmentsForDay} from "helpers/selectors"
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    appointments: []
+  });
+
+  const dailyAppointments = [];
   useEffect(() => {
-    axios.get('http://localhost:8001/api/days')
+
+    Promise.all([
+      axios.get('http://localhost:8001/api/days'),
+      axios.get('http://localhost:8001/api/appointments'),
+      axios.get('http://localhost:8001/api/interviewers')
+    ])
+    
     .then(function (response) {
       // handle success
-      console.log(response.data);
-      setDays(response.data);
-
+      console.log(response[0]);
+      console.log(Object.values(response[1].data));
+      console.log(response[2]);
+      setState({...state, days: response[0].data, appointments: Object.values(response[1].data)})
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     })
   }, [])
-  const appointments = props.appointments.map((apt) => {
+  const appointments = getAppointmentsForDay(state, state.day).map((apt) => {
     return (
       <Appointment
         {...apt}
         ></Appointment>
     );
   })
+
+  const setDay = (dayName) => {
+    setState({...state, day: dayName})
+  }
   return (
     <main className="layout">
       <section className="sidebar">
@@ -57,8 +57,8 @@ export default function Application(props) {
       <hr className="sidebar__separator sidebar--centered" />
       <nav className="sidebar__menu">
         <DayList
-          days={days}
-          day={day}
+          days={state.days}
+          day={state.day}
           setDay={setDay}
         />
       </nav>

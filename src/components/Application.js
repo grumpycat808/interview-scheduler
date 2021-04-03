@@ -4,14 +4,15 @@ import "components/Appointments"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Appointment from "components/Appointments";
-import {getAppointmentsForDay} from "helpers/selectors"
+import {getAppointmentsForDay, getInterview} from "helpers/selectors"
 
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    appointments: []
+    appointments: [],
+    interviewers: []
   });
 
   const dailyAppointments = [];
@@ -28,7 +29,8 @@ export default function Application(props) {
       console.log(response[0]);
       console.log(Object.values(response[1].data));
       console.log(response[2]);
-      setState({...state, days: response[0].data, appointments: Object.values(response[1].data)})
+      setState({...state, days: response[0].data, appointments: Object.values(response[1].data),
+       interviewers: Object.values(response[2].data)})
     })
     .catch(function (error) {
       // handle error
@@ -36,6 +38,9 @@ export default function Application(props) {
     })
   }, [])
   const appointments = getAppointmentsForDay(state, state.day).map((apt) => {
+
+    const interview = getInterview(state, apt.interview);
+    apt = {...apt, interview};
     return (
       <Appointment
         {...apt}

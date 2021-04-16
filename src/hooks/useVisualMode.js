@@ -1,5 +1,6 @@
 
 import {useState} from 'react';
+
 export default function useVisualMode(initial) {
     const [mode, setMode] = useState(initial);
     const [history, setHistory] = useState([initial]); 
@@ -16,7 +17,7 @@ export default function useVisualMode(initial) {
     }
     function back() { 
         
-        if(history.length === 1) return;
+        if(history.length < 2) return;
         const historyArr = history;
         historyArr.splice(history.length - 1, 1);
         

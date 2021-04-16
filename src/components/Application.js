@@ -26,9 +26,9 @@ export default function Application(props) {
     
     .then(function (response) {
       // handle success
-      console.log(response[0]);
-      console.log(Object.values(response[1].data));
-      console.log(response[2]);
+      // console.log(response[0]);
+      // console.log(Object.values(response[1].data));
+      // console.log(response[2]);
       setState({...state, days: response[0].data, appointments: Object.values(response[1].data),
        interviewers: Object.values(response[2].data)})
     })
@@ -40,10 +40,10 @@ export default function Application(props) {
   const appointments = getAppointmentsForDay(state, state.day).map((apt) => {
 
     const interview = getInterview(state, apt.interview);
-    apt = {...apt, interview};
+    apt = {...apt, interview, interviewers:state.interviewers};
     return (
       <Appointment
-        {...apt}
+        {...apt} 
         ></Appointment>
     );
   })

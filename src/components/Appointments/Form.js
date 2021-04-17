@@ -5,7 +5,7 @@ import InterviewerList from "components/InterviewerList"
 export default function Form(props) {
     const [name, setName] = useState(props.name || "");
     const [interviewer, setInterviewer] = useState(props.interviewer || null);
-   return (
+    return (
         <main className="appointment__card appointment__card--create">
         <section className="appointment__card-left">
             <form autoComplete="off">
@@ -14,7 +14,7 @@ export default function Form(props) {
                 name="name"
                 type="text"
                 placeholder="Enter Student Name"
-                onChange={setName}
+                onChange={((e) => setName(e.target.value))}
             />
             </form>
             <InterviewerList interviewers={props.interviewers} interviewer={props.interviewer} onChange={(interviewerId) => setInterviewer(interviewerId)} />
@@ -22,7 +22,7 @@ export default function Form(props) {
         <section className="appointment__card-right">
             <section className="appointment__actions">
             <Button onClick={props.onCancel} danger>Cancel</Button>
-            <Button onClick={props.onConfirm} confirm>Save</Button>
+            <Button onClick={() => props.onConfirm(name, interviewer)} confirm>Save</Button>
             </section>
         </section>
         </main>

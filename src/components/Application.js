@@ -37,10 +37,14 @@ export default function Application(props) {
       console.log(error);
     })
   }, [])
+
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
   const appointments = getAppointmentsForDay(state, state.day).map((apt) => {
 
     const interview = getInterview(state, apt.interview);
-    apt = {...apt, interview, interviewers:state.interviewers};
+    apt = {...apt, interview, interviewers:state.interviewers, bookInterview};
     return (
       <Appointment
         {...apt} 
@@ -51,6 +55,7 @@ export default function Application(props) {
   const setDay = (dayName) => {
     setState({...state, day: dayName})
   }
+  
   return (
     <main className="layout">
       <section className="sidebar">

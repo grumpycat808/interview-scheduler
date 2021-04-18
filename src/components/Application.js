@@ -48,14 +48,39 @@ export default function Application(props) {
       ...state.appointments,
       [id-1]: appointment
     };
+    return new Promise((resolve, reject) => {
+      axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then((res) => {
+        const aptArr = Object.values(appointments);
+        setState({...state, appointments:aptArr});
+        resolve(res);
+      })
+      .catch((err) => reject(err));
+    })
+  }
 
-    const aptArr = Object.values(appointments);
-    setState({...state, appointments:aptArr})
-    
+  function deleteInterview(id){
+    return new Promise((resolve, reject) => {
+      axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then((res) => {
+        const appointment = {
+          ...state.appointments[id-1],
+          interview: null
+        };
+        const appointments = {
+          ...state.appointments,
+          [id-1]: appointment
+        };
+        const aptArr = Object.values(appointments);
+        setState({...state, appointments:aptArr});
+        resolve(res);
+      })
+      .catch((err) => reject(err));
+    })
   }
   const appointments = getAppointmentsForDay(state, state.day).map((apt) => {
     const interview = getInterview(state, apt.interview);
-    apt = {...apt, interview, interviewers:state.interviewers, bookInterview, key:apt.id};
+    apt = {...apt, interview, interviewers:state.interviewers, bookInterview, deleteInterview, key:apt.id};
     return (
       <Appointment
         {...apt} 

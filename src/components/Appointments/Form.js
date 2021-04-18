@@ -14,10 +14,10 @@ export default function Form(props) {
                 name="name"
                 type="text"
                 placeholder="Enter Student Name"
-                onChange={((e) => setName(e.target.value))}
+                onChange={(e) => setName(e.target.value)}
             />
             </form>
-            <InterviewerList interviewers={props.interviewers} interviewer={props.interviewer} onChange={(interviewerId) => setInterviewer(interviewerId)} />
+            <InterviewerList interviewers={props.interviewers} interviewer={interviewer} onChange={(interviewerId) => setInterviewer(interviewerId)} />
         </section>
         <section className="appointment__card-right">
             <section className="appointment__actions">

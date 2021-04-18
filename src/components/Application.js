@@ -6,6 +6,7 @@ import axios from "axios";
 import Appointment from "components/Appointments";
 import {getAppointmentsForDay, getInterview} from "helpers/selectors"
 
+
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
@@ -15,7 +16,7 @@ export default function Application(props) {
     interviewers: []
   });
 
-  const dailyAppointments = [];
+  // const dailyAppointments = [];
   useEffect(() => {
 
     Promise.all([
@@ -39,12 +40,22 @@ export default function Application(props) {
   }, [])
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id-1],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id-1]: appointment
+    };
+
+    const aptArr = Object.values(appointments);
+    setState({...state, appointments:aptArr})
+    
   }
   const appointments = getAppointmentsForDay(state, state.day).map((apt) => {
-
     const interview = getInterview(state, apt.interview);
-    apt = {...apt, interview, interviewers:state.interviewers, bookInterview};
+    apt = {...apt, interview, interviewers:state.interviewers, bookInterview, key:apt.id};
     return (
       <Appointment
         {...apt} 
@@ -70,6 +81,7 @@ export default function Application(props) {
           days={state.days}
           day={state.day}
           setDay={setDay}
+          
         />
       </nav>
       <img

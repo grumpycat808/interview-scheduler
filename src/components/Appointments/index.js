@@ -4,13 +4,12 @@ import Header from "components/Appointments/Header"
 import Empty from "components/Appointments/Empty"
 import Form from "components/Appointments/Form"
 import "components/Appointments/styles.scss"
-import classnames from 'classnames/bind';
+// import classnames from 'classnames/bind';
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
-
 
 export default function Appointment(props) {
 const { mode, transition, back } = useVisualMode(
@@ -30,7 +29,10 @@ const { mode, transition, back } = useVisualMode(
      student: name,
      interviewer
    };
-   console.log("Saved", name, interviewer)
+   // console.log("apt id", props.id)
+
+   props.bookInterview(props.id, interview)
+   transition(SHOW);
  }
  
    return (

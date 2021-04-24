@@ -38,3 +38,4 @@ export function updateSpotsRemaining(state, appointmentId, book = true){
   return daysArr;
 }
 //Test commit
+//Another one

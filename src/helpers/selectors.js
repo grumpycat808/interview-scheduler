@@ -32,7 +32,6 @@ export function updateSpotsRemaining(state, appointmentId, book = true){
     ...dayObject,
     spots: book ? dayObject.spots - 1 : dayObject.spots + 1
   }
-  console.log("updatedSpots", updatedSpots)
 
   const daysArr = [...state.days.slice(0, index), updatedSpots, ...state.days.slice(index + 1)];
   

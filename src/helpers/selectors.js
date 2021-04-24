@@ -4,7 +4,6 @@ export function getAppointmentsForDay(state, day) {
   const aptIds = state.days.filter((weekDay) => weekDay.name === day);
   if(aptIds.length === 0) return [];
   return state.appointments.filter((apt) => aptIds[0].appointments.includes(apt.id));
-    
 }
 
 export function getInterview(state, interview) {
@@ -16,4 +15,26 @@ export function getInterview(state, interview) {
 
 export function getInterviewersForDay(){
 
+}
+
+export function updateSpotsRemaining(state, appointmentId, book = true){
+
+  let dayObject;
+  let index;
+  state.days.forEach((day, i) => {
+    if(day.appointments.includes(appointmentId)) {
+      dayObject = day;
+      index = i;
+    }
+  })
+  
+  const updatedSpots = {
+    ...dayObject,
+    spots: book ? dayObject.spots-- : dayObject.spots++
+  }
+  console.log("updatedSpots", updatedSpots)
+
+  const daysArr = [...state.days.slice(0, index), updatedSpots, ...state.days.slice(index + 1)];
+  
+  return daysArr;
 }

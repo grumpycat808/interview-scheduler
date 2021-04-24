@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-
+import { updateSpotsRemaining } from "helpers/selectors"
 import axios from "axios";
 
 export default function useApplicationData() { 
@@ -36,11 +36,15 @@ export default function useApplicationData() {
           ...state.appointments,
           [id-1]: appointment
         };
+
+        // const newDays = 
         return new Promise((resolve, reject) => {
           axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
           .then((res) => {
+            const newDays = updateSpotsRemaining(state, id, true);
             const aptArr = Object.values(appointments);
-            setState({...state, appointments:aptArr});
+            setState({...state, appointments:aptArr, days:newDays});
+            //appointments.slice(2, 3);
             resolve(res);
           })
           .catch((err) => reject(err));
@@ -59,11 +63,16 @@ export default function useApplicationData() {
               ...state.appointments,
               [id-1]: appointment
             };
+
+            const newDays = updateSpotsRemaining(state, id, false);
             const aptArr = Object.values(appointments);
-            setState({...state, appointments:aptArr});
+            setState({...state, appointments:aptArr, days: newDays});
             resolve(res);
           })
-          .catch((err) => reject(err));
+          .catch((err) => {
+              console.log(err)
+              reject(err)
+            });
         })
       }
     const setDay = (dayName) => {

@@ -4,7 +4,7 @@ import "components/Appointments"
 import React, { useState, useEffect } from "react";
 
 import Appointment from "components/Appointments";
-import {getAppointmentsForDay, getInterview} from "helpers/selectors"
+import { getAppointmentsForDay, getInterview } from "helpers/selectors"
 import useApplicationData from "hooks/useApplicationData"
 
 export default function Application(props) {

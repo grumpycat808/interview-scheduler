@@ -37,4 +37,4 @@ export function updateSpotsRemaining(state, appointmentId, book = true){
   
   return daysArr;
 }
-//did i sign in...
+//did i

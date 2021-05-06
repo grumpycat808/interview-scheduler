@@ -1,1 +1,10 @@
-test
+Run test coverage report 
+npm test -- --coverage --watchAll=false
+
+dom-testing-libraries queires can either be returned or imported
+import { getByText } from "@testing-library/react";
+const { getyByText } = render(<Application />);
+
+Might run into error if we don't wait for our async tests to finish running: 
+Warning: An update to Application inside a test was not wrapped in act(...)
+

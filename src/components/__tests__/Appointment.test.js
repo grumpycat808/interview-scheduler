@@ -45,6 +45,13 @@ describe("Appointment", () => {
           // console.log(prettyDOM(appointments));
           const appointment = res[0];
           fireEvent.click(getByAltText("Add"));
+          fireEvent.change(getByPlaceholderText(/enter student name/i), {
+            target: { value: "Lydia Miller-Jones" }
+          });
+
+          fireEvent.click(getByAltText("Sylvia Palmer"));
+
+          fireEvent.click(getByText("Save"));
           console.log(prettyDOM(res[0]))
         })
       });

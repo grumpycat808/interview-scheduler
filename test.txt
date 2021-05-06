@@ -8,3 +8,4 @@ const { getyByText } = render(<Application />);
 Might run into error if we don't wait for our async tests to finish running: 
 Warning: An update to Application inside a test was not wrapped in act(...)
 
+prettyDOM will make it easier to debug and print out DOM node

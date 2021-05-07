@@ -41,8 +41,8 @@ describe("Appointment", () => {
         } = render(<Application />);
           // const appointments = getAllByTestId("appointment");
 
-        return waitForElement(() => getAllByTestId("appointment")).then((res) => {
-          // console.log(prettyDOM(appointments));
+        return waitForElement(() => getAllByTestId("appointment")).then(async (res) => {
+         
           const appointment = res[0];
           fireEvent.click(getByAltText("Add"));
           fireEvent.change(getByPlaceholderText(/enter student name/i), {
@@ -52,7 +52,9 @@ describe("Appointment", () => {
           fireEvent.click(getByAltText("Sylvia Palmer"));
 
           fireEvent.click(getByText("Save"));
-          console.log(prettyDOM(res[0]))
+          expect(getByText("Saving...")).toBeInTheDocument();
+          await waitForElement(() => getByText("Lydia Miller-Jones"));
+
         })
       });
   });

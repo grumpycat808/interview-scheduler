@@ -70,7 +70,7 @@ export default function useApplicationData() {
             resolve(res);
           })
           .catch((err) => {
-              console.log(err)
+              
               reject(err)
             });
         })

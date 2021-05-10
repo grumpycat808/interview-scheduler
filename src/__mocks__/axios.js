@@ -57,8 +57,8 @@ const fixtures = {
   export default {
     defaults: { baseURL: "http://localhost:8001/" },
     put: jest.fn(url => {
-      
-      if (url === "http://localhost:8001/api/appointments") { 
+      console.log(url)
+      if (url === "http://localhost:8001/api/appointments/1") { 
         return Promise.resolve({
           status: 204,
           statusText: "No content",
